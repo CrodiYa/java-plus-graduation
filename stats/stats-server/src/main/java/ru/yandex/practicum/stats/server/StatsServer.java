@@ -6,8 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ViewStatsServerApp {
+public class StatsServer {
     public static void main(String[] args) {
-        SpringApplication.run(ViewStatsServerApp.class, args);
+        SpringApplication.run(StatsServer.class, args);
     }
 }

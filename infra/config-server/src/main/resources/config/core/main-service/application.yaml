@@ -21,9 +21,6 @@ spring:
       mode: always
       schema-locations: classpath:schema.sql
 
-stats-service:
-  uri: lb://stats-service
-
 eureka:
   instance:
     hostname: localhost

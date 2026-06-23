@@ -9,10 +9,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>core</artifactId>
+    <artifactId>stats</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>main-service</module>
+        <module>stats-client</module>
+        <module>stats-dto</module>
+        <module>stats-server</module>
     </modules>
 
     <properties>

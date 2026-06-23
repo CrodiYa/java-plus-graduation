@@ -11,7 +11,7 @@ import ru.yandex.practicum.ewm.validation.NullNotBlank;
 import ru.yandex.practicum.ewm.validation.OnCreate;
 import ru.yandex.practicum.ewm.validation.OnUpdate;
 
-import static ru.yandex.practicum.interaction.common.Formatter.PATTERN;
+import static ru.yandex.practicum.dto.Formatter.PATTERN;
 
 
 @Data

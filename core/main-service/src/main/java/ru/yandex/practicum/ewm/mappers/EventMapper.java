@@ -5,11 +5,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import ru.yandex.practicum.dto.Formatter;
 import ru.yandex.practicum.ewm.model.event.Event;
 import ru.yandex.practicum.ewm.model.event.EventDtoRequest;
 import ru.yandex.practicum.ewm.model.event.EventFullDto;
 import ru.yandex.practicum.ewm.model.event.EventShortDto;
-import ru.yandex.practicum.interaction.common.Formatter;
 
 @Mapper(componentModel = "spring", uses = {CategoryMapper.class, UserMapper.class}, imports = Formatter.class)
 public interface EventMapper {

@@ -2,10 +2,10 @@ package ru.yandex.practicum.ewm.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import ru.yandex.practicum.dto.Formatter;
 import ru.yandex.practicum.ewm.model.comment.Comment;
 import ru.yandex.practicum.ewm.model.comment.CommentDto;
 import ru.yandex.practicum.ewm.model.comment.CommentDtoRequest;
-import ru.yandex.practicum.interaction.common.Formatter;
 
 @Mapper(componentModel = "spring", imports = Formatter.class)
 public interface CommentMapper {

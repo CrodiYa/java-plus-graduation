@@ -9,10 +9,33 @@ spring:
       discovery:
         locator:
           enabled: true
-      default-filters:
-        - PrefixPath=/**
       routes:
-        - id: main_service_route
-          uri: lb://main_service
+        - id: categories_all
+          uri: lb://main-service
           predicates:
-            - Path=/**
+            - Path=/categories/**, /admin/categories/**
+
+        - id: comments_all
+          uri: lb://main-service
+          predicates:
+            - Path=/events/*/comments, /users/*/comments/**, /admin/comments/**
+
+        - id: compilations_all
+          uri: lb://main-service
+          predicates:
+            - Path=/compilations/**, /admin/compilations/**
+
+        - id: events_all
+          uri: lb://main-service
+          predicates:
+            - Path=/events/**, /users/*/events/**, /admin/events/**
+
+        - id: requests_all
+          uri: lb://main-service
+          predicates:
+            - Path=/users/*/requests/**
+
+        - id: users_all
+          uri: lb://main-service
+          predicates:
+            - Path=/admin/users/**

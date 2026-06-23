@@ -1,4 +1,4 @@
-package ru.yandex.practicum.ewm.config;
+package ru.yandex.practicum.stats.server.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

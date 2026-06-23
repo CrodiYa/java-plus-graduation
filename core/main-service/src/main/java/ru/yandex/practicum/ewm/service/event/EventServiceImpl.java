@@ -6,6 +6,11 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.client.StatsClient;
+import ru.yandex.practicum.dto.EndpointHitDto;
+import ru.yandex.practicum.dto.Formatter;
+import ru.yandex.practicum.dto.StatsRequest;
+import ru.yandex.practicum.dto.ViewStatsDto;
 import ru.yandex.practicum.ewm.exception.BadRequestException;
 import ru.yandex.practicum.ewm.exception.ConflictException;
 import ru.yandex.practicum.ewm.exception.NotFoundException;
@@ -21,11 +26,6 @@ import ru.yandex.practicum.ewm.repository.specification.AdminEventSpecification;
 import ru.yandex.practicum.ewm.repository.specification.PublicEventSpecification;
 import ru.yandex.practicum.ewm.service.category.CategoryService;
 import ru.yandex.practicum.ewm.service.user.UserService;
-import ru.yandex.practicum.interaction.common.Formatter;
-import ru.yandex.practicum.interaction.stats.controller.StatsClient;
-import ru.yandex.practicum.interaction.stats.dto.EndpointHitDto;
-import ru.yandex.practicum.interaction.stats.dto.StatsRequest;
-import ru.yandex.practicum.interaction.stats.dto.ViewStatsDto;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ru.yandex.practicum.interaction.common.Formatter.toInstant;
+import static ru.yandex.practicum.dto.Formatter.toInstant;
 
 
 @Slf4j

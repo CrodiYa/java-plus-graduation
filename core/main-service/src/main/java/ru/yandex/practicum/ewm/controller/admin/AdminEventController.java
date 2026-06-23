@@ -17,7 +17,7 @@ import ru.yandex.practicum.ewm.validation.OnUpdate;
 
 import java.util.List;
 
-import static ru.yandex.practicum.interaction.common.Formatter.PATTERN;
+import static ru.yandex.practicum.dto.Formatter.PATTERN;
 
 @Slf4j
 @RestController

@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      default-filters:
+        - PrefixPath=/**
+      routes:
+        - id: main_service_route
+          uri: lb://main_service
+          predicates:
+            - Path=/**

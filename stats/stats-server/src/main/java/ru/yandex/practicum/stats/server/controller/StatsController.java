@@ -19,7 +19,6 @@ public class StatsController {
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
     public EndpointHitDto saveHit(@RequestBody @Valid EndpointHitDto endpointHitDto) {
-        System.out.println("ПРИХОД");
         return statsService.saveHit(endpointHitDto);
     }
 

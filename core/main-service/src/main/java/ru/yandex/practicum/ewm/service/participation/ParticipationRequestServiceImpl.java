@@ -45,21 +45,21 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         Event event = eventService.findEntityById(eventId);
 
         if (!EventState.PUBLISHED.equals(event.getState())) {
-            throw new ConflictException("Нельзя участвовать в неопубликованном событии");
+            throw new ConflictException("Can`t participate in not published event");
         }
 
         if (repository.existsByRequesterIdAndEventId(userId, eventId)) {
-            throw new ConflictException("Запрос уже существует");
+            throw new ConflictException("Request already exists");
         }
 
         if (event.getInitiator().getId().equals(userId)) {
-            throw new ConflictException("Инициатор события не может добавить запрос на участие в своём событии");
+            throw new ConflictException("Initiator can`t put request on it`s own event");
         }
 
         Integer limit = event.getParticipantLimit();
 
         if (limit != 0 && repository.countByEventIdAndStatus(eventId, ParticipationStatus.CONFIRMED) >= limit) {
-            throw new ConflictException("Достигнут лимит запросов на участие");
+            throw new ConflictException("Max limit reached");
         }
 
         ParticipationRequest request = ParticipationRequest.builder()
@@ -78,10 +78,10 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     @Override
     public ParticipationRequestDto cancelParticipationRequest(Long userId, Long requestId) {
         ParticipationRequest request = repository.findById(requestId)
-                .orElseThrow(() -> new NotFoundException("Заявка не найдена"));
+                .orElseThrow(() -> new NotFoundException("Request with id " + requestId + " not found"));
 
         if (!request.getRequester().getId().equals(userId)) {
-            throw new ConflictException("Нельзя отменить чужую заявку");
+            throw new ConflictException("Can`t cancel foreign request");
         }
         request.setStatus(ParticipationStatus.CANCELED);
         return mapper.toDto(repository.save(request));
@@ -121,12 +121,12 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         List<ParticipationRequest> requests = repository.findAllByIdIn(request.getRequestIds());
 
         if (ParticipationStatus.CONFIRMED.equals(request.getStatus()) && countConfirmed >= limit) {
-            throw new ConflictException("Достигнут лимит подтвержденных заявок");
+            throw new ConflictException("Max limit reached");
         }
 
         for (ParticipationRequest pr : requests) {
             if (!ParticipationStatus.PENDING.equals(pr.getStatus())) {
-                throw new ConflictException("Статус можно изменить только у заявок в состоянии рассмотрения");
+                throw new ConflictException("Status can be changed only in pending requests");
             }
 
             if (ParticipationStatus.CONFIRMED.equals(request.getStatus()) && countConfirmed < limit) {
@@ -154,7 +154,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     private Event getEventAndVerifyOwner(Long userId, Long eventId) {
         Event event = eventService.findEntityById(eventId);
         if (!event.getInitiator().getId().equals(userId)) {
-            throw new NotFoundException("Событие не найдено");
+            throw new NotFoundException("Event with id " + eventId + " not found");
         }
         return event;
     }

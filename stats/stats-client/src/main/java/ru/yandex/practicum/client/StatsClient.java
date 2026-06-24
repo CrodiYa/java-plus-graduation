@@ -49,7 +49,7 @@ public class StatsClient {
                     .getInstances(statsServiceId)
                     .getFirst();
         } catch (Exception exception) {
-            throw new RuntimeException("Ошибка обнаружения адреса сервиса с id: " + statsServiceId, exception);
+            throw new RuntimeException("Can`t find service`s address with id: " + statsServiceId, exception);
         }
     }
 

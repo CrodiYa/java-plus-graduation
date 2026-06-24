@@ -1,7 +1,6 @@
 package ru.yandex.practicum.ewm.service.user;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,15 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.ewm.exception.ConflictException;
 import ru.yandex.practicum.ewm.exception.NotFoundException;
 import ru.yandex.practicum.ewm.mappers.UserMapper;
-import ru.yandex.practicum.ewm.model.user.User;
 import ru.yandex.practicum.ewm.model.user.NewUserRequest;
+import ru.yandex.practicum.ewm.model.user.User;
 import ru.yandex.practicum.ewm.model.user.UserDto;
 import ru.yandex.practicum.ewm.repository.UserRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -53,12 +51,11 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto createUser(NewUserRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new ConflictException("Email " + request.getEmail() + " уже используется");
+            throw new ConflictException("Email " + request.getEmail() + " is already taken");
         }
 
         User user = userMapper.toEntity(request);
         User savedUser = userRepository.save(user);
-        log.info("Создан пользователь: id={}, name={}", savedUser.getId(), savedUser.getName());
 
         return userMapper.toDto(savedUser);
     }
@@ -67,11 +64,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
-            throw new NotFoundException("Пользователь с id=" + userId + " не найден");
+            throw new NotFoundException("User with id " + userId + " not found");
         }
 
         userRepository.deleteById(userId);
-        log.info("Удалён пользователь: id={}", userId);
     }
 
     @Override

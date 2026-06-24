@@ -56,7 +56,7 @@ public class CommentServiceImpl implements CommentService {
         validateCommentBelongsToEvent(comment, eventId);
 
         if (!comment.getAuthor().getId().equals(userId)) {
-            throw new ForbiddenException("Только автор может менять комментарии");
+            throw new ForbiddenException("Only author can change comments");
         }
 
         comment.setText(request.getText());
@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService {
         validateCommentBelongsToEvent(comment, eventId);
 
         if (!comment.getAuthor().getId().equals(userId)) {
-            throw new ForbiddenException("Только автор может удалять комментарии");
+            throw new ForbiddenException("Only author can change comments");
         }
 
         commentRepository.deleteById(commentId);
@@ -127,7 +127,7 @@ public class CommentServiceImpl implements CommentService {
 
     private Comment findEntityById(Long commentId) {
         return commentRepository.findById(commentId)
-                .orElseThrow(() -> new NotFoundException("Комментарий с id " + commentId + " не найден"));
+                .orElseThrow(() -> new NotFoundException("Comment with id " + commentId + " not found"));
     }
 
     private Sort getSorting(String sort) {
@@ -141,13 +141,13 @@ public class CommentServiceImpl implements CommentService {
 
     private void validateCommentBelongsToEvent(Comment comment, Long eventId) {
         if (!comment.getEventId().equals(eventId)) {
-            throw new NotFoundException("Комментарий с id: " + comment.getId() + "не найден для события c id: " + eventId);
+            throw new NotFoundException("Comment with id: " + comment.getId() + " not found for event with id: " + eventId);
         }
     }
 
     private void throwIfEventNotPublished(Event event) {
         if (!event.getState().equals(EventState.PUBLISHED)) {
-            throw new BadRequestException("Событие еще не опубликовано");
+            throw new BadRequestException("Event is not published");
         }
     }
 }

@@ -54,7 +54,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     public void deleteCompilation(Long compilationId) {
         if (!compilationRepository.existsById(compilationId)) {
-            throw new NotFoundException("Подборка не найдена");
+            throw new NotFoundException("Compilation with id " + compilationId + " not found");
         }
         compilationRepository.deleteById(compilationId);
     }
@@ -82,7 +82,7 @@ public class CompilationServiceImpl implements CompilationService {
 
     private Compilation findEntityById(Long compilationId) {
         return compilationRepository.findById(compilationId)
-                .orElseThrow(() -> new NotFoundException("Подборка не найдена"));
+                .orElseThrow(() -> new NotFoundException("Compilation with id " + compilationId + " not found"));
     }
 
     private Set<Event> getEventsFromIds(Set<Long> eventIds) {

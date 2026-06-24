@@ -23,7 +23,7 @@ public class StatsServiceImpl implements StatsService {
     public List<ViewStatsDto> getStats(Instant start, Instant end,
                                        List<String> uris, boolean unique) {
         if (start.isAfter(end) || start.equals(end)) {
-            throw new BadRequestException("Неправильно заданное время");
+            throw new BadRequestException("Incorrect time set");
         }
 
         if (uris != null && !uris.isEmpty()) {

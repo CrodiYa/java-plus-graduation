@@ -232,18 +232,6 @@ public class EventServiceImpl implements EventService {
         }
     }
 
-    /**
-     * Internal method that handles both user and admin event patching operations.
-     *
-     * @param eventId          id of the event to update
-     * @param request          DTO containing the fields to update
-     * @param hoursBeforeStart minimum number of hours required before the event starts
-     * @param isAdmin          flag indicating whether the operation is performed by an admin
-     * @return full updated event {@link EventFullDto}
-     * @throws NotFoundException   if the event or category not found
-     * @throws BadRequestException if date validation fails
-     * @throws ConflictException   if state transition is invalid or a data integrity violation occurs
-     */
     private EventFullDto patchEvent(Long eventId, EventDtoRequest request, long hoursBeforeStart, boolean isAdmin) {
         try {
             if (request.getEventDate() != null) {

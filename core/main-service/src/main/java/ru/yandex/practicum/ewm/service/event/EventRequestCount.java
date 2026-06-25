@@ -1,0 +1,7 @@
+package ru.yandex.practicum.ewm.service.event;
+
+public interface EventRequestCount {
+    Long getEventId();
+
+    Integer getCount();
+}

@@ -11,7 +11,7 @@ import ru.yandex.practicum.participation.service.ParticipationServiceInternal;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/participation")
+@RequestMapping(path = "/api/request")
 @RequiredArgsConstructor
 public class ParticipationControllerInternal implements ParticipationClient {
 

@@ -8,7 +8,7 @@ import ru.yandex.practicum.interaction.dto.participation.ParticipationStatus;
 
 import java.util.List;
 
-@FeignClient(name = "participation-service", path = "/api/participation")
+@FeignClient(name = "request-service", path = "/api/request")
 public interface ParticipationClient {
 
     @GetMapping("/count/{eventId}")

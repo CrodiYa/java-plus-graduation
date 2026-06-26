@@ -25,4 +25,4 @@ eureka:
   instance:
     hostname: localhost
     preferIpAddress: false
-    instance-id: participation-service:${random.value}
+    instance-id: request-service:${random.value}

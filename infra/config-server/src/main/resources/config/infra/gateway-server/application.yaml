@@ -11,7 +11,7 @@ spring:
           enabled: true
       routes:
         - id: requests_all
-          uri: lb://participation-service
+          uri: lb://request-service
           predicates:
             - Path=/users/*/requests/**, /users/{userId}/events/{eventId}/requests/**
         - id: comments_all

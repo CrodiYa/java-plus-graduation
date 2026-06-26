@@ -5,9 +5,9 @@ spring:
     ansi:
       enabled: ALWAYS
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/ewm?currentSchema=user_schema
-    username: ${DB_USERNAME:ewm}
-    password: ${DB_PASSWORD:ewm}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/ewm_analyzer?currentSchema=user_schema
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:

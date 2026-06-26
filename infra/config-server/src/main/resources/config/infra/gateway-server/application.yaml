@@ -10,32 +10,27 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: categories_all
-          uri: lb://main-service
+        - id: requests_all
+          uri: lb://participation-service
           predicates:
-            - Path=/categories/**, /admin/categories/**
-
+            - Path=/users/*/requests/**, /users/{userId}/events/{eventId}/requests/**
         - id: comments_all
-          uri: lb://main-service
+          uri: lb://comment-service
           predicates:
-            - Path=/events/*/comments, /users/*/comments/**, /admin/comments/**
-
-        - id: compilations_all
-          uri: lb://main-service
-          predicates:
-            - Path=/compilations/**, /admin/compilations/**
-
+            - Path=/events/*/comment/**, /users/{userId}/events/{eventId}/comment/**, /users/{userId}/events/comment/**, /admin/events/{eventId}/comment/**
         - id: events_all
-          uri: lb://main-service
+          uri: lb://event-service
           predicates:
             - Path=/events/**, /users/*/events/**, /admin/events/**
-
-        - id: requests_all
-          uri: lb://main-service
+        - id: categories_all
+          uri: lb://event-service
           predicates:
-            - Path=/users/*/requests/**
-
+            - Path=/categories/**, /admin/categories/**
+        - id: compilations_all
+          uri: lb://event-service
+          predicates:
+            - Path=/compilations/**, /admin/compilations/**
         - id: users_all
-          uri: lb://main-service
+          uri: lb://user-service
           predicates:
             - Path=/admin/users/**

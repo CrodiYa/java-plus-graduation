@@ -2,7 +2,7 @@ package ru.yandex.practicum.user.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.yandex.practicum.interaction.dto.user.NewUserRequest;
+import ru.yandex.practicum.interaction.dto.user.NewUserDto;
 import ru.yandex.practicum.interaction.dto.user.UserDto;
 import ru.yandex.practicum.user.model.User;
 
@@ -10,7 +10,7 @@ import ru.yandex.practicum.user.model.User;
 public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
-    User toEntity(NewUserRequest request);
+    User toEntity(NewUserDto request);
 
     UserDto toDto(User user);
 }

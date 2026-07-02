@@ -1,7 +1,7 @@
 package ru.yandex.practicum.user.service;
 
 
-import ru.yandex.practicum.interaction.dto.user.NewUserRequest;
+import ru.yandex.practicum.interaction.dto.user.NewUserDto;
 import ru.yandex.practicum.interaction.dto.user.UserDto;
 import ru.yandex.practicum.interaction.exception.ConflictException;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
@@ -45,7 +45,7 @@ public interface UserService {
      * @return created user DTO
      * @throws ConflictException if a user with the same email or name already exists
      */
-    UserDto createUser(NewUserRequest request);
+    UserDto createUser(NewUserDto request);
 
     /**
      * Deletes a user by its id.

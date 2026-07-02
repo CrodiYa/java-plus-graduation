@@ -2,7 +2,7 @@ package ru.yandex.practicum.event.service.compilation;
 
 import ru.yandex.practicum.interaction.dto.event.compilation.CompilationDto;
 import ru.yandex.practicum.interaction.dto.event.compilation.NewCompilationDto;
-import ru.yandex.practicum.interaction.dto.event.compilation.UpdateCompilationRequest;
+import ru.yandex.practicum.interaction.dto.event.compilation.UpdateCompilationDto;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public interface CompilationService {
      * @return updated compilation DTO
      * @throws NotFoundException if the compilation or any referenced event does not exist
      */
-    CompilationDto updateCompilation(Long compilationId, UpdateCompilationRequest dto);
+    CompilationDto updateCompilation(Long compilationId, UpdateCompilationDto dto);
 
     /**
      * Deletes a compilation by its id.

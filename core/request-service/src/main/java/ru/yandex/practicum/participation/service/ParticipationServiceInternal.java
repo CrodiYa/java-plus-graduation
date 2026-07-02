@@ -2,7 +2,7 @@ package ru.yandex.practicum.participation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.interaction.dto.participation.EventRequestCount;
+import ru.yandex.practicum.interaction.dto.participation.EventRequestCountDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationStatus;
 import ru.yandex.practicum.participation.repository.ParticipationRequestRepository;
 
@@ -18,7 +18,7 @@ public class ParticipationServiceInternal {
         return requestRepository.countByEventIdAndStatus(eventId, status);
     }
 
-    public List<EventRequestCount> countConfirmedRequestsByEventIds(List<Long> eventIds, ParticipationStatus status) {
+    public List<EventRequestCountDto> countConfirmedRequestsByEventIds(List<Long> eventIds, ParticipationStatus status) {
         return requestRepository.countConfirmedRequestsByEventIds(eventIds, status);
     }
 }

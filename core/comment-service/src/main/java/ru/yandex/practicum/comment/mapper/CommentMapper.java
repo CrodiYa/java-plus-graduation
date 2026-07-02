@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import ru.yandex.practicum.comment.model.Comment;
 import ru.yandex.practicum.dto.Formatter;
 import ru.yandex.practicum.interaction.dto.comment.CommentDto;
-import ru.yandex.practicum.interaction.dto.comment.CommentDtoRequest;
+import ru.yandex.practicum.interaction.dto.comment.CommentShortDto;
 
 @Mapper(componentModel = "spring", imports = Formatter.class)
 public interface CommentMapper {
@@ -20,5 +20,5 @@ public interface CommentMapper {
     @Mapping(target = "authorName", ignore = true)
     @Mapping(target = "created", ignore = true)
     @Mapping(target = "updated", ignore = true)
-    Comment toComment(CommentDtoRequest dto);
+    Comment toComment(CommentShortDto dto);
 }

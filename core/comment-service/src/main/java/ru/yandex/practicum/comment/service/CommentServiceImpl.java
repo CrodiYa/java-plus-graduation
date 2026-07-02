@@ -10,7 +10,7 @@ import ru.yandex.practicum.comment.repository.CommentRepository;
 import ru.yandex.practicum.interaction.client.event.EventClient;
 import ru.yandex.practicum.interaction.client.user.UserClient;
 import ru.yandex.practicum.interaction.dto.comment.CommentDto;
-import ru.yandex.practicum.interaction.dto.comment.CommentDtoRequest;
+import ru.yandex.practicum.interaction.dto.comment.CommentShortDto;
 import ru.yandex.practicum.interaction.dto.event.event.EventFullDto;
 import ru.yandex.practicum.interaction.dto.event.event.EventState;
 import ru.yandex.practicum.interaction.dto.user.UserDto;
@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public CommentDto addComment(Long userId, Long eventId, CommentDtoRequest request) {
+    public CommentDto addComment(Long userId, Long eventId, CommentShortDto request) {
         EventFullDto event = eventClient.getEventFullDtoById(eventId);
 
         throwIfEventNotPublished(event);
@@ -49,7 +49,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto patchComment(Long userId, Long eventId, Long commentId, CommentDtoRequest request) {
+    public CommentDto patchComment(Long userId, Long eventId, Long commentId, CommentShortDto request) {
         if (!userClient.existsById(userId)) {
             throw new NotFoundException("User with id " + userId + " not found");
         }
@@ -136,11 +136,26 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.toDto(comment);
     }
 
+    /**
+     * Retrieves a comment entity by its id.
+     *
+     * @param commentId id of the comment to retrieve
+     * @return comment entity
+     * @throws NotFoundException if the comment with the given id does not exist
+     */
     private Comment findEntityById(Long commentId) {
         return commentRepository.findById(commentId)
                 .orElseThrow(() -> new NotFoundException("Comment with id " + commentId + " not found"));
     }
 
+    /**
+     * Creates a Sort object for ordering comments by creation date.
+     * Default sorting is descending (newest first). If the provided sort parameter
+     * equals "ASC" (case-insensitive), returns ascending order.
+     *
+     * @param sort sorting order string ("ASC" for ascending, any other value for descending)
+     * @return Sort object configured for the specified order
+     */
     private Sort getSorting(String sort) {
         Sort sorting = Sort.by("created").descending();
         if (sort.equalsIgnoreCase("ASC")) {
@@ -150,12 +165,26 @@ public class CommentServiceImpl implements CommentService {
         return sorting;
     }
 
+    /**
+     * Validates that a comment belongs to the specified event.
+     *
+     * @param comment comment entity to validate
+     * @param eventId id of the event the comment should belong to
+     * @throws NotFoundException if the comment does not belong to the specified event
+     */
     private void validateCommentBelongsToEvent(Comment comment, Long eventId) {
         if (!comment.getEventId().equals(eventId)) {
             throw new NotFoundException("Comment with id: " + comment.getId() + " not found for event with id: " + eventId);
         }
     }
 
+    /**
+     * Checks if an event is in the PUBLISHED state.
+     * Throws an exception if the event is not published.
+     *
+     * @param event full event DTO to validate
+     * @throws BadRequestException if the event is not published
+     */
     private void throwIfEventNotPublished(EventFullDto event) {
         if (!event.getState().equals(EventState.PUBLISHED)) {
             throw new BadRequestException("Event is not published");

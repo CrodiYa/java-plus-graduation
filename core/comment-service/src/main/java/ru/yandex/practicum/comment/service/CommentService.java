@@ -2,7 +2,7 @@ package ru.yandex.practicum.comment.service;
 
 
 import ru.yandex.practicum.interaction.dto.comment.CommentDto;
-import ru.yandex.practicum.interaction.dto.comment.CommentDtoRequest;
+import ru.yandex.practicum.interaction.dto.comment.CommentShortDto;
 import ru.yandex.practicum.interaction.exception.BadRequestException;
 import ru.yandex.practicum.interaction.exception.ForbiddenException;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
@@ -21,7 +21,7 @@ public interface CommentService {
      * @throws NotFoundException   if the user or event does not exist
      * @throws BadRequestException if the comment content is invalid
      */
-    CommentDto addComment(Long userId, Long eventId, CommentDtoRequest request);
+    CommentDto addComment(Long userId, Long eventId, CommentShortDto request);
 
     /**
      * Updates an existing comment.
@@ -35,7 +35,7 @@ public interface CommentService {
      * @throws BadRequestException if the updated content is invalid
      * @throws ForbiddenException  if the user is not the author of the comment
      */
-    CommentDto patchComment(Long userId, Long eventId, Long commentId, CommentDtoRequest request);
+    CommentDto patchComment(Long userId, Long eventId, Long commentId, CommentShortDto request);
 
     /**
      * Deletes a comment by a user.

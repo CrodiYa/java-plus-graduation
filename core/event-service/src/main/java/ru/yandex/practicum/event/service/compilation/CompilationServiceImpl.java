@@ -11,7 +11,7 @@ import ru.yandex.practicum.event.repository.CompilationRepository;
 import ru.yandex.practicum.event.repository.EventRepository;
 import ru.yandex.practicum.interaction.dto.event.compilation.CompilationDto;
 import ru.yandex.practicum.interaction.dto.event.compilation.NewCompilationDto;
-import ru.yandex.practicum.interaction.dto.event.compilation.UpdateCompilationRequest;
+import ru.yandex.practicum.interaction.dto.event.compilation.UpdateCompilationDto;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
 
 import java.util.Collections;
@@ -39,7 +39,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    public CompilationDto updateCompilation(Long compilationId, UpdateCompilationRequest dto) {
+    public CompilationDto updateCompilation(Long compilationId, UpdateCompilationDto dto) {
         Compilation compilation = findEntityById(compilationId);
 
         compilationMapper.merge(compilation, dto);
@@ -80,11 +80,25 @@ public class CompilationServiceImpl implements CompilationService {
         return compilationMapper.toDto(findEntityById(compilationId));
     }
 
+    /**
+     * Retrieves a compilation entity by its id.
+     *
+     * @param compilationId id of the compilation to retrieve
+     * @return compilation entity
+     * @throws NotFoundException if the compilation with the given id does not exist
+     */
     private Compilation findEntityById(Long compilationId) {
         return compilationRepository.findById(compilationId)
                 .orElseThrow(() -> new NotFoundException("Compilation with id " + compilationId + " not found"));
     }
 
+    /**
+     * Retrieves a set of event entities based on the provided event ids.
+     * Returns an empty set if the provided collection is null or empty.
+     *
+     * @param eventIds set of event ids to retrieve
+     * @return set of event entities
+     */
     private Set<Event> getEventsFromIds(Set<Long> eventIds) {
         if (eventIds == null || eventIds.isEmpty()) {
             return Collections.emptySet();

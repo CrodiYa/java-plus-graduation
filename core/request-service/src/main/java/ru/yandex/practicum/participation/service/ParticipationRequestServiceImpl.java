@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.interaction.client.event.EventClient;
 import ru.yandex.practicum.interaction.client.user.UserClient;
 import ru.yandex.practicum.interaction.dto.event.event.EventFullDto;
-import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateRequest;
-import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateResult;
+import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateResultDto;
 import ru.yandex.practicum.interaction.dto.event.event.EventState;
+import ru.yandex.practicum.interaction.dto.event.event.UpdateEventRequestStatusDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationRequestDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationStatus;
 import ru.yandex.practicum.interaction.exception.ConflictException;
@@ -99,8 +99,8 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     }
 
     @Override
-    public EventRequestStatusUpdateResult updateStatusParticipationRequest(Long userId, Long eventId,
-                                                                           EventRequestStatusUpdateRequest request) {
+    public EventRequestStatusUpdateResultDto updateStatusParticipationRequest(Long userId, Long eventId,
+                                                                              UpdateEventRequestStatusDto request) {
         EventFullDto event = getEventAndVerifyOwner(userId, eventId);
 
         int limit = event.getParticipantLimit();
@@ -111,7 +111,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         boolean idsEmpty = request.getRequestIds() == null || request.getRequestIds().isEmpty();
 
         if (isModerationOff || idsEmpty) {
-            return EventRequestStatusUpdateResult.builder()
+            return EventRequestStatusUpdateResultDto.builder()
                     .confirmedRequests(Collections.emptyList())
                     .rejectedRequests(Collections.emptyList())
                     .build();
@@ -145,12 +145,21 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
             repository.rejectPendingRequests(eventId, ParticipationStatus.PENDING);
         }
 
-        return EventRequestStatusUpdateResult.builder()
+        return EventRequestStatusUpdateResultDto.builder()
                 .confirmedRequests(confirmedRequests)
                 .rejectedRequests(rejectedRequests)
                 .build();
     }
 
+    /**
+     * Retrieves a full event DTO by its id and verifies that the specified user is the initiator.
+     * Throws an exception if the user does not own the event.
+     *
+     * @param userId  id of the user who should own the event
+     * @param eventId id of the event to retrieve
+     * @return full event DTO
+     * @throws NotFoundException if the event does not exist or the user is not the owner
+     */
     private EventFullDto getEventAndVerifyOwner(Long userId, Long eventId) {
         EventFullDto event = eventClient.getEventFullDtoById(eventId);
         if (!event.getInitiator().getId().equals(userId)) {

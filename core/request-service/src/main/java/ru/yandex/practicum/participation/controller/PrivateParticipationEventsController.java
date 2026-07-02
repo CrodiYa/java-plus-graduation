@@ -2,32 +2,40 @@ package ru.yandex.practicum.participation.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateRequest;
-import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateResultDto;
+import ru.yandex.practicum.interaction.dto.event.event.UpdateEventRequestStatusDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationRequestDto;
-import ru.yandex.practicum.participation.service.ParticipationRequestService;
 
 import java.util.List;
 
-@RestController
-@RequestMapping(path = "/users/{userId}/events")
-@RequiredArgsConstructor
-public class PrivateParticipationEventsController {
+public interface PrivateParticipationEventsController {
 
-    private final ParticipationRequestService participationService;
-
+    /**
+     * Retrieves all participation requests for a specific event.
+     *
+     * @param userId  id of the user requesting the list
+     * @param eventId id of the event
+     * @return list of participation request DTOs
+     */
     @GetMapping("/{eventId}/requests")
-    public List<ParticipationRequestDto> getRequests(@PathVariable @Positive Long userId,
-                                                     @PathVariable @Positive Long eventId) {
-        return participationService.findByEventId(userId, eventId);
-    }
+    List<ParticipationRequestDto> getRequests(@PathVariable @Positive Long userId,
+                                              @PathVariable @Positive Long eventId);
 
+    /**
+     * Updates the status of multiple participation requests for a specific event.
+     *
+     * @param userId  id of the user updating the requests
+     * @param eventId id of the event
+     * @param request DTO containing the list of request IDs and the new status
+     * @return result containing lists of confirmed and rejected requests
+     */
     @PatchMapping("/{eventId}/requests")
-    public EventRequestStatusUpdateResult patchRequests(@PathVariable @Positive Long userId,
-                                                        @PathVariable @Positive Long eventId,
-                                                        @RequestBody @Valid EventRequestStatusUpdateRequest request) {
-        return participationService.updateStatusParticipationRequest(userId, eventId, request);
-    }
+    EventRequestStatusUpdateResultDto patchRequests(@PathVariable @Positive Long userId,
+                                                    @PathVariable @Positive Long eventId,
+                                                    @RequestBody @Valid UpdateEventRequestStatusDto request);
+
 }

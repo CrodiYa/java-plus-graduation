@@ -10,7 +10,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdateCompilationRequest {
+public class UpdateCompilationDto {
 
     private Set<Long> events;
 

@@ -1,8 +1,8 @@
 package ru.yandex.practicum.participation.service;
 
 
-import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateRequest;
-import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateResult;
+import ru.yandex.practicum.interaction.dto.event.event.UpdateEventRequestStatusDto;
+import ru.yandex.practicum.interaction.dto.event.event.EventRequestStatusUpdateResultDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationRequestDto;
 import ru.yandex.practicum.interaction.exception.ConflictException;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
@@ -70,6 +70,6 @@ public interface ParticipationRequestService {
      *                           if the participant limit has been reached,
      *                           or if trying to confirm already confirmed/rejected requests
      */
-    EventRequestStatusUpdateResult updateStatusParticipationRequest(
-            Long userId, Long eventId, EventRequestStatusUpdateRequest request);
+    EventRequestStatusUpdateResultDto updateStatusParticipationRequest(
+            Long userId, Long eventId, UpdateEventRequestStatusDto request);
 }

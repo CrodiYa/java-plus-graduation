@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.yandex.practicum.interaction.dto.user.NewUserRequest;
+import ru.yandex.practicum.interaction.dto.user.NewUserDto;
 import ru.yandex.practicum.interaction.dto.user.UserDto;
 import ru.yandex.practicum.interaction.exception.ConflictException;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto createUser(NewUserRequest request) {
+    public UserDto createUser(NewUserDto request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new ConflictException("Email " + request.getEmail() + " is already taken");
         }

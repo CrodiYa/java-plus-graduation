@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.interaction.client.participation.ParticipationClient;
-import ru.yandex.practicum.interaction.dto.participation.EventRequestCount;
+import ru.yandex.practicum.interaction.dto.participation.EventRequestCountDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationStatus;
 import ru.yandex.practicum.participation.service.ParticipationServiceInternal;
 
@@ -23,7 +23,7 @@ public class ParticipationControllerInternal implements ParticipationClient {
     }
 
     @Override
-    public List<EventRequestCount> countConfirmedRequestsByEventIds(List<Long> eventIds, ParticipationStatus status) {
+    public List<EventRequestCountDto> countConfirmedRequestsByEventIds(List<Long> eventIds, ParticipationStatus status) {
         return serviceInternal.countConfirmedRequestsByEventIds(eventIds, status);
     }
 }

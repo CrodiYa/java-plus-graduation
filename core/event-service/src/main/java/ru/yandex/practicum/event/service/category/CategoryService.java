@@ -2,7 +2,7 @@ package ru.yandex.practicum.event.service.category;
 
 import ru.yandex.practicum.event.model.category.Category;
 import ru.yandex.practicum.interaction.dto.event.category.CategoryDto;
-import ru.yandex.practicum.interaction.dto.event.category.CategoryDtoRequest;
+import ru.yandex.practicum.interaction.dto.event.category.CategoryShortDto;
 import ru.yandex.practicum.interaction.exception.ConflictException;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
 
@@ -44,7 +44,7 @@ public interface CategoryService {
      * @return created category DTO
      * @throws ConflictException if a category with the same name already exists
      */
-    CategoryDto addCategory(CategoryDtoRequest request);
+    CategoryDto addCategory(CategoryShortDto request);
 
     /**
      * Updates an existing category.
@@ -55,7 +55,7 @@ public interface CategoryService {
      * @throws NotFoundException if the category with the given id does not exist
      * @throws ConflictException if a category with the same name already exists
      */
-    CategoryDto patchCategory(Long id, CategoryDtoRequest request);
+    CategoryDto patchCategory(Long id, CategoryShortDto request);
 
     /**
      * Deletes a category by its id.

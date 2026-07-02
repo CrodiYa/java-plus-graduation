@@ -22,7 +22,7 @@ import ru.yandex.practicum.event.service.category.CategoryService;
 import ru.yandex.practicum.interaction.client.participation.ParticipationClient;
 import ru.yandex.practicum.interaction.client.user.UserClient;
 import ru.yandex.practicum.interaction.dto.event.event.*;
-import ru.yandex.practicum.interaction.dto.participation.EventRequestCount;
+import ru.yandex.practicum.interaction.dto.participation.EventRequestCountDto;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationStatus;
 import ru.yandex.practicum.interaction.dto.user.UserDto;
 import ru.yandex.practicum.interaction.exception.BadRequestException;
@@ -298,6 +298,13 @@ public class EventServiceImpl implements EventService {
         }
     }
 
+    /**
+     * Assembles a full event DTO from an event entity.
+     * Retrieves the initiator information via user client.
+     *
+     * @param event event entity to convert
+     * @return full event DTO with initiator information
+     */
     private EventFullDto assemblyFullDto(Event event) {
         UserDto initiatorDto = userClient.getUserDtoById(event.getInitiatorId());
         EventFullDto fullDto = eventMapper.toFullDto(event);
@@ -305,12 +312,27 @@ public class EventServiceImpl implements EventService {
         return fullDto;
     }
 
+    /**
+     * Assembles a full event DTO from an event entity and a pre-fetched initiator DTO.
+     * Used to avoid additional client calls when initiator is already available.
+     *
+     * @param event     event entity to convert
+     * @param initiator pre-fetched initiator DTO
+     * @return full event DTO with initiator information
+     */
     private EventFullDto assemblyFullDto(Event event, UserDto initiator) {
         EventFullDto fullDto = eventMapper.toFullDto(event);
         fullDto.setInitiator(initiator);
         return fullDto;
     }
 
+    /**
+     * Converts a date string to an Instant.
+     * Returns null if the provided string is null.
+     *
+     * @param date date string to convert
+     * @return Instant representation of the date, or null if input is null
+     */
     private Instant getRangeInstant(String date) {
         if (date != null) {
             return toInstant(date);
@@ -319,6 +341,13 @@ public class EventServiceImpl implements EventService {
         return null;
     }
 
+    /**
+     * Retrieves view statistics for the specified event ids from the stats service.
+     * Returns an empty map if no event ids are provided or if no stats are available.
+     *
+     * @param eventIds list of event ids to retrieve views for
+     * @return map where key is the event URI and value is the hit count
+     */
     private Map<String, Long> getViewsMap(List<Long> eventIds) {
         if (eventIds.isEmpty()) return Collections.emptyMap();
 
@@ -342,14 +371,21 @@ public class EventServiceImpl implements EventService {
                 ));
     }
 
+    /**
+     * Retrieves the count of confirmed participation requests for the specified event ids.
+     * Returns an empty map if no event ids are provided.
+     *
+     * @param eventIds list of event ids to retrieve confirmed request counts for
+     * @return map where key is the event id and value is the count of confirmed requests
+     */
     private Map<Long, Integer> getConfirmedMap(List<Long> eventIds) {
         if (eventIds.isEmpty()) return Collections.emptyMap();
 
         return participationClient.countConfirmedRequestsByEventIds(eventIds, ParticipationStatus.CONFIRMED)
                 .stream()
                 .collect(Collectors.toMap(
-                        EventRequestCount::getEventId,
-                        EventRequestCount::getCount
+                        EventRequestCountDto::getEventId,
+                        EventRequestCountDto::getCount
                 ));
     }
 }

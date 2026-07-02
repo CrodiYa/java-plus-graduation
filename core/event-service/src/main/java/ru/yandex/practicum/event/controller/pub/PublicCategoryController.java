@@ -2,30 +2,32 @@ package ru.yandex.practicum.event.controller.pub;
 
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.event.service.category.CategoryService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.yandex.practicum.interaction.dto.event.category.CategoryDto;
 
 import java.util.List;
 
-@Slf4j
-@RestController
-@RequestMapping(path = "/categories")
-@RequiredArgsConstructor
-public class PublicCategoryController {
+public interface PublicCategoryController {
 
-    private final CategoryService categoryService;
-
+    /**
+     * Retrieves a paginated list of all categories.
+     *
+     * @param from the index of the first element to retrieve (0-based), default is 0
+     * @param size the number of elements to retrieve, default is 10
+     * @return list of category DTOs
+     */
     @GetMapping
-    public List<CategoryDto> findAll(@RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-                                     @RequestParam(defaultValue = "10") @Positive Integer size) {
-        return categoryService.findAll(from, size);
-    }
+    List<CategoryDto> findAll(@RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
+                              @RequestParam(defaultValue = "10") @Positive Integer size);
 
+    /**
+     * Retrieves detailed information about a specific category by its id.
+     *
+     * @param catId id of the category to retrieve
+     * @return category DTO
+     */
     @GetMapping("/{catId}")
-    public CategoryDto findById(@PathVariable @Positive Long catId) {
-        return categoryService.findById(catId);
-    }
+    CategoryDto findById(@PathVariable @Positive Long catId);
 }

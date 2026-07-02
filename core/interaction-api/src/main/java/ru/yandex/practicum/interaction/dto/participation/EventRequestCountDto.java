@@ -5,19 +5,19 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EventRequestCount {
+public class EventRequestCountDto {
     private Long eventId;
     private Integer count;
 
-    public EventRequestCount() {
+    public EventRequestCountDto() {
     }
 
-    public EventRequestCount(Long eventId, Integer count) {
+    public EventRequestCountDto(Long eventId, Integer count) {
         this.eventId = eventId;
         this.count = count;
     }
 
-    public EventRequestCount(Long eventId, Long count) {
+    public EventRequestCountDto(Long eventId, Long count) {
         this.eventId = eventId;
         this.count = count != null ? count.intValue() : 0;
     }

@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventRequestStatusUpdateRequest {
+public class UpdateEventRequestStatusDto {
     private List<Long> requestIds;
     @NotNull
     private ParticipationStatus status;

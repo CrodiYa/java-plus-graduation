@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewUserRequest {
+public class NewUserDto {
 
     @NotBlank(message = "Имя не может быть пустым")
     @Size(min = 2, max = 250, message = "Имя должно быть от 2 до 250 символов")

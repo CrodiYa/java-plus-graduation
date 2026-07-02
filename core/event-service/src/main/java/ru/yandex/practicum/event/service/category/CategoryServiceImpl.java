@@ -10,7 +10,7 @@ import ru.yandex.practicum.event.mapper.CategoryMapper;
 import ru.yandex.practicum.event.model.category.Category;
 import ru.yandex.practicum.event.repository.CategoryRepository;
 import ru.yandex.practicum.interaction.dto.event.category.CategoryDto;
-import ru.yandex.practicum.interaction.dto.event.category.CategoryDtoRequest;
+import ru.yandex.practicum.interaction.dto.event.category.CategoryShortDto;
 import ru.yandex.practicum.interaction.exception.ConflictException;
 import ru.yandex.practicum.interaction.exception.NotFoundException;
 
@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 
     @Override
-    public CategoryDto addCategory(CategoryDtoRequest request) {
+    public CategoryDto addCategory(CategoryShortDto request) {
         if (categoryRepository.existsByName(request.getName())) {
             throw new ConflictException("Name is not unique");
         }
@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto patchCategory(Long id, CategoryDtoRequest request) {
+    public CategoryDto patchCategory(Long id, CategoryShortDto request) {
         if (categoryRepository.existsByNameAndIdNot(request.getName(), id)) {
             throw new ConflictException("Name is not unique");
         }

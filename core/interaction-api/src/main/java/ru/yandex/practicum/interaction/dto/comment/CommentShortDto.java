@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentDtoRequest {
+public class CommentShortDto {
     @NotBlank
     @Size(min = 1, max = 1000)
     private String text;

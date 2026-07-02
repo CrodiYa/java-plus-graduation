@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDtoRequest {
+public class CategoryShortDto {
 
     @NotBlank(message = "Name can`t be empty or null")
     @Size(min = 1, max = 50, message = "Min length = 1, Max length = 50")

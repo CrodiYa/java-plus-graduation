@@ -1,0 +1,18 @@
+package ru.yandex.practicum.interaction.dto.comment;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class CommentShortDto {
+    @NotBlank
+    @Size(min = 1, max = 1000)
+    private String text;
+}

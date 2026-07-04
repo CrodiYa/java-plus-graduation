@@ -1,0 +1,9 @@
+CREATE SCHEMA IF NOT EXISTS participation_schema;
+
+CREATE TABLE IF NOT EXISTS participation_schema.participation (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    event_id BIGINT NOT NULL,
+    requester_id BIGINT NOT NULL,
+    created TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    status VARCHAR(50) NOT NULL
+);

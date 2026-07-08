@@ -2,6 +2,7 @@ package ru.yandex.practicum.ewm.stats.analyzer.kafka;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.consumer.Consumer;
@@ -9,7 +10,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.practicum.ewm.stats.avro.EventSimilarityAvro;
 import ru.practicum.ewm.stats.avro.UserActionAvro;
@@ -19,10 +19,10 @@ import java.util.*;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class KafkaClient {
 
-    @Autowired
-    private KafkaProperties kafkaProperties;
+    private final KafkaProperties kafkaProperties;
 
     private Consumer<Void, SpecificRecordBase> actionConsumer;
     private Consumer<Void, SpecificRecordBase> similarityConsumer;
@@ -34,16 +34,13 @@ public class KafkaClient {
         String actionsTopic = kafkaProperties.getTopic().getActions();
         String similarityTopic = kafkaProperties.getTopic().getSimilarity();
 
-        this.actionConsumer = initAndGetConsumer(actionsTopic);
-        this.similarityConsumer = initAndGetConsumer(similarityTopic);
+        this.actionConsumer = new KafkaConsumer<>(getActionConsumerConfig());
+        this.actionConsumer.subscribe(Collections.singletonList(actionsTopic));
+
+        this.similarityConsumer = new KafkaConsumer<>(getSimilarityConsumerConfig());
+        this.similarityConsumer.subscribe(Collections.singletonList(similarityTopic));
 
         this.consumeAttemptTimeout = Duration.ofMillis(kafkaProperties.getConsumeAttemptTimeout());
-    }
-
-    private Consumer<Void, SpecificRecordBase> initAndGetConsumer(String topic) {
-        Consumer<Void, SpecificRecordBase> consumer = new KafkaConsumer<>(getConsumerConfig());
-        consumer.subscribe(Collections.singletonList(topic));
-        return consumer;
     }
 
     public List<UserActionAvro> pollUserActions() {
@@ -78,9 +75,16 @@ public class KafkaClient {
         return messages;
     }
 
-    private Properties getConsumerConfig() {
+    private Properties getActionConsumerConfig() {
         Properties config = new Properties();
-        Map<String, String> props = kafkaProperties.getConsumer().getProperties();
+        Map<String, String> props = kafkaProperties.getActionConsumer().getProperties();
+        props.forEach(config::setProperty);
+        return config;
+    }
+
+    private Properties getSimilarityConsumerConfig() {
+        Properties config = new Properties();
+        Map<String, String> props = kafkaProperties.getSimilarityConsumer().getProperties();
         props.forEach(config::setProperty);
         return config;
     }

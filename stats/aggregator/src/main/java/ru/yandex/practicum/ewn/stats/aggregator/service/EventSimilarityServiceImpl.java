@@ -104,15 +104,15 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
     /**
      * Updates the minimum weight sum for a pair of events and calculates their similarity.
      *
-     * @param eventId1   first event id
-     * @param eventId2   second event id
-     * @param oldWeight1 previous weight for the first event
-     * @param newWeight1 new weight for the first event
-     * @param weight2    current weight for the second event
+     * @param eventId1    first event id
+     * @param eventId2    second event id
+     * @param oldWeight   previous weight for the first event
+     * @param newWeight   new weight for the first event
+     * @param otherWeight current weight for the second event
      * @return similarity score between the two events
      */
     private double updateAndCalculate(long eventId1, long eventId2,
-                                      double oldWeight1, double newWeight1, double weight2) {
+                                      double oldWeight, double newWeight, double otherWeight) {
 
         long first = Math.min(eventId1, eventId2);
         long second = Math.max(eventId1, eventId2);
@@ -120,8 +120,8 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
         Map<Long, Double> pairSums = minWeightsSums.computeIfAbsent(first, k -> new HashMap<>());
         double currentMin = pairSums.getOrDefault(second, 0.0);
 
-        double oldMin = Math.min(oldWeight1, weight2);
-        double newMin = Math.min(newWeight1, weight2);
+        double oldMin = Math.min(oldWeight, otherWeight);
+        double newMin = Math.min(newWeight, otherWeight);
         double diff = newMin - oldMin;
 
         pairSums.put(second, currentMin + diff);

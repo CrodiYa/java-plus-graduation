@@ -19,7 +19,7 @@ public class EventSimilarity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     @Column(name = "event_A", nullable = false)
     private Long eventA;

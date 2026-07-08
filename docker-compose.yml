@@ -42,9 +42,9 @@ services:
     volumes:
       - stats-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=stats
-      - POSTGRES_USER=stats
       - POSTGRES_DB=stats
+      - POSTGRES_USER=stats
+      - POSTGRES_PASSWORD=stats
     healthcheck:
       test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
       timeout: 5s
@@ -60,9 +60,9 @@ services:
     volumes:
       - ewm-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_PASSWORD=ewm_analyzer
+      - POSTGRES_DB=ewm_analyzer
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=password
+      - POSTGRES_PASSWORD=password
     healthcheck:
       test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
       timeout: 5s

@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS similarities (
     event_B BIGINT NOT NULL,
     score DOUBLE PRECISION NOT NULL,
     ts TIMESTAMP WITH TIME ZONE NOT NULL,
+    UNIQUE(event_A, event_B)
 );
 
 CREATE TABLE IF NOT EXISTS user_actions (
@@ -11,6 +12,6 @@ CREATE TABLE IF NOT EXISTS user_actions (
     user_id BIGINT NOT NULL,
     event_id BIGINT NOT NULL,
     action_type VARCHAR(50) NOT NULL,
-    ts TIMESTAMP WITH TIME ZONE NOT NULL,
+    ts TIMESTAMP WITH TIME ZONE NOT NULL
 );
 

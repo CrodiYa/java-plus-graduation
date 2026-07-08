@@ -1,13 +1,15 @@
 package ru.yandex.practicum.ewm.stats.analyzer.controller;
 
+import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import ru.yandex.practicum.ewm.stats.analyzer.service.RecommendationService;
-import ru.yandex.practicum.grpc.stats.action.*;
+import ru.yandex.practicum.grpc.stats.action.InteractionsCountRequestProto;
+import ru.yandex.practicum.grpc.stats.action.RecommendedEventProto;
+import ru.yandex.practicum.grpc.stats.action.SimilarEventsRequestProto;
+import ru.yandex.practicum.grpc.stats.action.UserPredictionsRequestProto;
 import ru.yandex.practicum.grpc.stats.service.dashboard.RecommendationsControllerGrpc;
-
-import java.util.stream.Stream;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -16,15 +18,41 @@ public class RecommendationsController extends RecommendationsControllerGrpc.Rec
 
     private final RecommendationService recommendationService;
 
-    public Stream<RecommendedEventProto> getRecommendationsForUser(UserPredictionsRequestProto requestProto) {
-        return recommendationService.getRecommendationsForUser(requestProto);
+    @Override
+    public void getRecommendationsForUser(UserPredictionsRequestProto requestProto,
+                                          StreamObserver<RecommendedEventProto> responseObserver) {
+        try {
+            recommendationService.getRecommendationsForUser(requestProto)
+                    .forEach(responseObserver::onNext);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("Error in getRecommendationsForUser", e);
+            responseObserver.onError(e);
+        }
+
     }
 
-    public Stream<RecommendedEventProto> getSimilarEvents(SimilarEventsRequestProto similarEventsRequestProto) {
-        return recommendationService.getSimilarEvents(similarEventsRequestProto);
+    public void getSimilarEvents(SimilarEventsRequestProto similarEventsRequestProto,
+                                 StreamObserver<RecommendedEventProto> responseObserver) {
+        try {
+            recommendationService.getSimilarEvents(similarEventsRequestProto)
+                    .forEach(responseObserver::onNext);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("Error in GetSimilarEvents", e);
+            responseObserver.onError(e);
+        }
     }
 
-    public Stream<RecommendedEventProto> getInteractionsCount(InteractionsCountRequestProto interactionsCountRequestProto) {
-        return recommendationService.getInteractionsCount(interactionsCountRequestProto);
+    public void getInteractionsCount(InteractionsCountRequestProto interactionsCountRequestProto,
+                                     StreamObserver<RecommendedEventProto> responseObserver) {
+        try {
+            recommendationService.getInteractionsCount(interactionsCountRequestProto)
+                    .forEach(responseObserver::onNext);
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("Error in GetInteractionsCount", e);
+            responseObserver.onError(e);
+        }
     }
 }

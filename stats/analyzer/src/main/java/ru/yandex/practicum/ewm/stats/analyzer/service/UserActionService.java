@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserActionService {
     /**
-     * Saves a list of user actions.
+     * Saves or updates a list of user actions.
      *
      * @param userActionAvroList list of user action Avro objects to save
      */

@@ -3,10 +3,12 @@ package ru.yandex.practicum.ewm.stats.analyzer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ConfigurableApplicationContext;
 import ru.yandex.practicum.ewm.stats.analyzer.processor.EventSimilarityProcessor;
 import ru.yandex.practicum.ewm.stats.analyzer.processor.UserActionProcessor;
 
+@EnableDiscoveryClient
 @SpringBootApplication
 @ConfigurationPropertiesScan
 public class AnalyzerApplication {

@@ -6,12 +6,15 @@ import ru.yandex.practicum.ewm.stats.analyzer.model.EventSimilarity;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface EventSimilarityRepository extends JpaRepository<EventSimilarity, Long> {
 
+    Optional<EventSimilarity> findByEventAAndEventB(Long eventA, Long eventB);
+
     @Query("""
             SELECT es
-            FROM EventSimilarity
+            FROM EventSimilarity es
             WHERE es.eventA = :eventId
             OR es.eventB = :eventId
             ORDER BY es.score DESC
@@ -21,7 +24,7 @@ public interface EventSimilarityRepository extends JpaRepository<EventSimilarity
 
     @Query("""
             SELECT es
-            FROM EventSimilarity
+            FROM EventSimilarity es
             WHERE es.eventA IN :eventIds
             OR es.eventB IN :eventIds
             """)

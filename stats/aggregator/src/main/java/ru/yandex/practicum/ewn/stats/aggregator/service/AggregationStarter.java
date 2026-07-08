@@ -19,6 +19,8 @@ public class AggregationStarter {
     private final EventSimilarityServiceImpl eventSimilarityService;
 
     public void start() {
+        Runtime.getRuntime().addShutdownHook(new Thread(kafkaClient::wakeup));
+
         try {
             while (true) {
                 List<UserActionAvro> userActions = kafkaClient.pollUserActions();

@@ -21,6 +21,14 @@ spring:
       mode: always
       schema-locations: classpath:schema.sql
 
+grpc:
+  client:
+    collector:
+      address: 'discovery:///collector'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
 eureka:
   instance:
     hostname: localhost

@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -11,12 +12,12 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "analyzer.kafka")
 public class KafkaProperties {
     private int consumeAttemptTimeout;
-    private Consumer consumer = new Consumer();
+    private ConsumerConfig actionConsumer = new ConsumerConfig();
+    private ConsumerConfig similarityConsumer = new ConsumerConfig();
     private Topic topic = new Topic();
 
-
     @Data
-    public static class Consumer {
+    public static class ConsumerConfig {
         private Map<String, String> properties;
     }
 

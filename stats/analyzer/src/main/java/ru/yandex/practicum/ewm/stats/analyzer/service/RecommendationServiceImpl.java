@@ -70,8 +70,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     public Stream<RecommendedEventProto> getSimilarEvents(SimilarEventsRequestProto requestProto) {
-        return eventSimilarityService.findByEventIdOrderByScore(requestProto.getEventId(),
-                        requestProto.getMaxResults())
+        return eventSimilarityService.findByEventIdOrderByScore(requestProto.getEventId(), requestProto.getMaxResults())
                 .stream()
                 .map(s -> {
                     Long otherId = getOppositeEventId(s, requestProto.getEventId());
@@ -100,7 +99,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     private RecommendedEventProto assembleRecommendedEvent(Long eventId, Double score) {
         return RecommendedEventProto.newBuilder()
                 .setEventId(eventId)
-                .setScore(score)
+                .setScore(score != null ? score : 0.0)
                 .build();
     }
 

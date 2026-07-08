@@ -1,6 +1,7 @@
 package ru.yandex.practicum.ewm.stats.collector.kafka;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -12,9 +13,10 @@ import java.util.Map;
 import java.util.Properties;
 
 @Component
+@RequiredArgsConstructor
 public class KafkaClient {
 
-    private KafkaProperties kafkaProperties;
+    private final KafkaProperties kafkaProperties;
     private Producer<Void, SpecificRecordBase> producer;
 
     @PostConstruct

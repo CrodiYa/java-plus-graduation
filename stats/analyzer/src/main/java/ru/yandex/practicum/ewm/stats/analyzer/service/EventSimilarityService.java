@@ -9,11 +9,11 @@ import java.util.List;
 public interface EventSimilarityService {
 
     /**
-     * Updates event similarity records based on the provided list.
+     * Saves or updates event similarity records based on the provided list.
      *
      * @param eventSimilarityAvroList list of event similarity Avro objects to update
      */
-    void updateSimilarities(List<EventSimilarityAvro> eventSimilarityAvroList);
+    void saveSimilarities(List<EventSimilarityAvro> eventSimilarityAvroList);
 
     /**
      * Retrieves all event similarity records for the specified event ids.

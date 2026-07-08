@@ -1,8 +1,12 @@
 package ru.yandex.practicum.participation.service;
 
+import com.google.protobuf.Timestamp;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.client.CollectorClient;
+import ru.yandex.practicum.grpc.stats.action.ActionTypeProto;
+import ru.yandex.practicum.grpc.stats.action.UserActionProto;
 import ru.yandex.practicum.interaction.client.event.EventClient;
 import ru.yandex.practicum.interaction.client.user.UserClient;
 import ru.yandex.practicum.interaction.dto.event.event.EventFullDto;
@@ -17,6 +21,7 @@ import ru.yandex.practicum.participation.mapper.ParticipationRequestMapper;
 import ru.yandex.practicum.participation.model.ParticipationRequest;
 import ru.yandex.practicum.participation.repository.ParticipationRequestRepository;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,6 +35,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     private final ParticipationRequestMapper mapper;
     private final UserClient userClient;
     private final EventClient eventClient;
+    private final CollectorClient collectorClient;
 
     @Override
     public List<ParticipationRequestDto> findByRequesterId(Long requesterId) {
@@ -73,6 +79,18 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         if (!event.getRequestModeration() || limit == 0) {
             request.setStatus(ParticipationStatus.CONFIRMED);
         }
+
+        UserActionProto userAction = UserActionProto.newBuilder()
+                .setUserId(userId)
+                .setEventId(eventId)
+                .setActionType(ActionTypeProto.ACTION_REGISTER)
+                .setTimestamp(Timestamp.newBuilder()
+                        .setSeconds(Instant.now().getEpochSecond())
+                        .setNanos(Instant.now().getNano())
+                        .build())
+                .build();
+
+        collectorClient.sendUserAction(userAction);
 
         return mapper.toDto(repository.save(request));
     }

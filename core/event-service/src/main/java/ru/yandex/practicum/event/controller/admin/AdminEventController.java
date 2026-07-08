@@ -12,7 +12,8 @@ import ru.yandex.practicum.interaction.validation.OnUpdate;
 
 import java.util.List;
 
-import static ru.yandex.practicum.dto.Formatter.PATTERN;
+import static ru.yandex.practicum.interaction.common.Formatter.PATTERN;
+
 
 public interface AdminEventController {
 

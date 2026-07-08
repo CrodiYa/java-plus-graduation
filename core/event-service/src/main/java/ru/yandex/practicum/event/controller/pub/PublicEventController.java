@@ -2,9 +2,7 @@ package ru.yandex.practicum.event.controller.pub;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Positive;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.interaction.dto.event.event.EventFullDto;
 import ru.yandex.practicum.interaction.dto.event.event.EventShortDto;
 
@@ -50,4 +48,26 @@ public interface PublicEventController {
     @GetMapping("/{id}")
     EventFullDto findPublicEvent(@PathVariable(name = "id") @Positive Long eventId,
                                  HttpServletRequest request);
+
+    /**
+     * Retrieves personalized event recommendations for a specific user.
+     * Uses similarity calculations based on user actions to suggest relevant events.
+     *
+     * @param userId    id of the user requesting recommendations
+     * @param maxResult maximum number of recommendations to return, default is 10
+     * @return list of recommended short event DTOs
+     */
+    @GetMapping("/recommendations")
+    List<EventShortDto> getRecommendations(@RequestHeader("X-EWM-USER-ID") Long userId,
+                                           @RequestParam(defaultValue = "10") Integer maxResult);
+
+    /**
+     * Adds a like from a user to a specific event.
+     * Records the user's positive interaction with the event for similarity calculations.
+     *
+     * @param eventId id of the event to like
+     * @param userId  id of the user adding the like
+     */
+    @PutMapping("/{eventId}/like")
+    void addLike(@PathVariable @Positive Long eventId, @RequestHeader("X-EWM-USER-ID") Long userId);
 }

@@ -8,7 +8,7 @@ import ru.yandex.practicum.interaction.exception.ConflictException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import static ru.yandex.practicum.dto.Formatter.toInstant;
+import static ru.yandex.practicum.interaction.common.Formatter.toInstant;
 
 
 public class EventValidator {

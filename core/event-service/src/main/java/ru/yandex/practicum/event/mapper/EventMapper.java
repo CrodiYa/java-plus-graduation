@@ -1,8 +1,8 @@
 package ru.yandex.practicum.event.mapper;
 
 import org.mapstruct.*;
-import ru.yandex.practicum.dto.Formatter;
 import ru.yandex.practicum.event.model.event.Event;
+import ru.yandex.practicum.interaction.common.Formatter;
 import ru.yandex.practicum.interaction.dto.event.event.EventDtoRequest;
 import ru.yandex.practicum.interaction.dto.event.event.EventFullDto;
 import ru.yandex.practicum.interaction.dto.event.event.EventShortDto;
@@ -16,12 +16,12 @@ public interface EventMapper {
     @Mapping(target = "createdOn", expression = "java(Formatter.format(event.getCreatedOn()))")
     @Mapping(target = "publishedOn", expression = "java(event.getPublishedOn() == null ? null : Formatter.format(event.getPublishedOn()))")
     @Mapping(target = "confirmedRequests", ignore = true)
-    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     EventFullDto toFullDto(Event event);
 
     @Mapping(target = "eventDate", expression = "java(Formatter.format(event.getEventDate()))")
     @Mapping(target = "confirmedRequests", ignore = true)
-    @Mapping(target = "views", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     EventShortDto toShortDto(Event event);
 
     @Mapping(source = "location.lat", target = "lat")

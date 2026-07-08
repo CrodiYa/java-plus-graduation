@@ -13,7 +13,7 @@ public class UserActionMapper {
         ua.setUserId(avro.getUserId());
         ua.setEventId(avro.getEventId());
         ua.setActionType(getType(avro.getActionType()));
-        ua.setTimestamp(ua.getTimestamp());
+        ua.setTimestamp(avro.getTimestamp());
         return ua;
     }
 

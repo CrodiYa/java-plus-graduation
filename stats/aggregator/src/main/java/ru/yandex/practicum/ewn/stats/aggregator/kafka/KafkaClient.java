@@ -92,6 +92,10 @@ public class KafkaClient {
         return messages;
     }
 
+    public void wakeup(){
+        this.consumer.wakeup();
+    }
+
     private Properties getConsumerConfig() {
         Properties config = new Properties();
         Map<String, String> props = kafkaProperties.getConsumer().getProperties();

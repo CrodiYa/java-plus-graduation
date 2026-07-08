@@ -30,7 +30,9 @@ public class EventSimilarityProcessor implements Runnable {
         try {
             while (true) {
                 List<EventSimilarityAvro> eventSimilarities = kafkaClient.pollMessages();
-                similarityService.updateSimilarities(eventSimilarities);
+                if (!eventSimilarities.isEmpty()) {
+                    similarityService.updateSimilarities(eventSimilarities);
+                }
             }
 
         } catch (WakeupException ignored) {

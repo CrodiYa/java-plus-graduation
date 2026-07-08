@@ -30,7 +30,9 @@ public class UserActionProcessor implements Runnable {
         try {
             while (true) {
                 List<UserActionAvro> userActionAvroList = kafkaClient.pollMessages();
-                userActionService.saveUserAction(userActionAvroList);
+                if (!userActionAvroList.isEmpty()) {
+                    userActionService.saveUserAction(userActionAvroList);
+                }
             }
 
         } catch (WakeupException ignored) {

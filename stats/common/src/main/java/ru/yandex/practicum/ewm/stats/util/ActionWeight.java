@@ -7,7 +7,7 @@ public class ActionWeight {
 
     private static final double VIEW_COEF = 0.4;
     private static final double REGISTER_COEF = 0.8;
-    private static final double LIKE_COEF = 1;
+    private static final double LIKE_COEF = 1.0;
 
     /**
      * Returns the weight value for a given action type.

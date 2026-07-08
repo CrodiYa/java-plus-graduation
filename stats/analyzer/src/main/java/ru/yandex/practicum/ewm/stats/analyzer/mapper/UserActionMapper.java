@@ -12,12 +12,12 @@ public class UserActionMapper {
         UserAction ua = new UserAction();
         ua.setUserId(avro.getUserId());
         ua.setEventId(avro.getEventId());
-        ua.setActionType(getType(avro.getActionType()));
+        ua.setActionType(toActionType(avro.getActionType()));
         ua.setTimestamp(avro.getTimestamp());
         return ua;
     }
 
-    private ActionType getType(ActionTypeAvro avro) {
+    public ActionType toActionType(ActionTypeAvro avro) {
         return switch (avro) {
             case VIEW -> ActionType.VIEW;
             case LIKE -> ActionType.LIKE;

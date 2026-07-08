@@ -19,11 +19,19 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
 
     @Override
     public void updateSimilarities(List<EventSimilarityAvro> eventSimilarityAvroList) {
-        List<EventSimilarity> similarities = eventSimilarityAvroList.stream()
-                .map(similarityMapper::toEventSimilarity)
-                .toList();
+        for (EventSimilarityAvro avro : eventSimilarityAvroList) {
+            similarityRepository.findByEventAAndEventB(avro.getEventA(), avro.getEventB())
+                    .ifPresentOrElse(
+                            es -> updateSimilarity(es, avro),
+                            () -> similarityRepository.save(similarityMapper.toEventSimilarity(avro))
+                    );
+        }
+    }
 
-        similarityRepository.saveAll(similarities);
+    private void updateSimilarity(EventSimilarity es, EventSimilarityAvro avro) {
+        es.setScore(avro.getScore());
+        es.setTimestamp(avro.getTimestamp());
+        similarityRepository.save(es);
     }
 
     @Override

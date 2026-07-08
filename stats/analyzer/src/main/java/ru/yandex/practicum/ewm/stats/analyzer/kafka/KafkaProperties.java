@@ -12,12 +12,12 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "analyzer.kafka")
 public class KafkaProperties {
     private int consumeAttemptTimeout;
-    private Consumer actionConsumer = new Consumer();
-    private Consumer similarityConsumer = new Consumer();
+    private ConsumerConfig actionConsumer = new ConsumerConfig();
+    private ConsumerConfig similarityConsumer = new ConsumerConfig();
     private Topic topic = new Topic();
 
     @Data
-    public static class Consumer {
+    public static class ConsumerConfig {
         private Map<String, String> properties;
     }
 

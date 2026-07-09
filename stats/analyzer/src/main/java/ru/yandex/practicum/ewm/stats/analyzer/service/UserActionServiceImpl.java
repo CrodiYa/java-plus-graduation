@@ -9,6 +9,8 @@ import ru.yandex.practicum.ewm.stats.analyzer.repository.UserActionRepository;
 import ru.yandex.practicum.ewm.stats.util.ActionWeight;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,8 +43,18 @@ public class UserActionServiceImpl implements UserActionService {
 
     @Override
     public Double calculateMaxRatingPerUserByEventId(Long eventId) {
+//        return userActionRepository.findAllByEventId(eventId).stream()
+//                .mapToDouble(ua -> ActionWeight.getWeight(ua.getActionType()))
+//                .sum();
+
         return userActionRepository.findAllByEventId(eventId).stream()
-                .mapToDouble(ua -> ActionWeight.getWeight(ua.getActionType()))
+                .collect(Collectors.groupingBy(
+                        UserAction::getUserId,
+                        Collectors.mapping(ua -> ActionWeight.getWeight(ua.getActionType()), Collectors.maxBy(Double::compare))
+                ))
+                .values().stream()
+                .filter(Optional::isPresent)
+                .mapToDouble(Optional::get)
                 .sum();
     }
 }

@@ -43,18 +43,8 @@ public class UserActionServiceImpl implements UserActionService {
 
     @Override
     public Double calculateMaxRatingPerUserByEventId(Long eventId) {
-//        return userActionRepository.findAllByEventId(eventId).stream()
-//                .mapToDouble(ua -> ActionWeight.getWeight(ua.getActionType()))
-//                .sum();
-
         return userActionRepository.findAllByEventId(eventId).stream()
-                .collect(Collectors.groupingBy(
-                        UserAction::getUserId,
-                        Collectors.mapping(ua -> ActionWeight.getWeight(ua.getActionType()), Collectors.maxBy(Double::compare))
-                ))
-                .values().stream()
-                .filter(Optional::isPresent)
-                .mapToDouble(Optional::get)
+                .mapToDouble(ua -> ActionWeight.getWeight(ua.getActionType()))
                 .sum();
     }
 }

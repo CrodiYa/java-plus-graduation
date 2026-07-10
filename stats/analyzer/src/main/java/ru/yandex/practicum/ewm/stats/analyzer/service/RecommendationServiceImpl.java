@@ -125,7 +125,6 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return the candidate event id if exactly one of the pair is in the set, null otherwise
      */
     private Long extractCandidate(EventSimilarity eventSimilarity, Set<Long> userEventIds) {
-        // we can`t trust input data, so we double-check
         if (userEventIds.contains(eventSimilarity.getEventA())) {
             return eventSimilarity.getEventB();
         } else if (userEventIds.contains(eventSimilarity.getEventB())) {

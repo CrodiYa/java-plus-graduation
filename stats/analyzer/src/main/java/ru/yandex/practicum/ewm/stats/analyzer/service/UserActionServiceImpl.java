@@ -31,6 +31,10 @@ public class UserActionServiceImpl implements UserActionService {
     }
 
     private void updateAction(UserAction ua, UserActionAvro avro) {
+        double currentWeight = ActionWeight.getWeight(ua.getActionType());
+        double newWeight = ActionWeight.getWeight(avro.getActionType());
+        if (newWeight <= currentWeight) return;
+
         ua.setActionType(userActionMapper.toActionType(avro.getActionType()));
         ua.setTimestamp(avro.getTimestamp());
         userActionRepository.save(ua);

@@ -2,7 +2,7 @@ package ru.yandex.practicum.participation.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import ru.yandex.practicum.dto.Formatter;
+import ru.yandex.practicum.interaction.common.Formatter;
 import ru.yandex.practicum.interaction.dto.participation.ParticipationRequestDto;
 import ru.yandex.practicum.participation.model.ParticipationRequest;
 

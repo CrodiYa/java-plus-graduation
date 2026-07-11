@@ -31,4 +31,14 @@ public class PublicEventControllerImpl implements PublicEventController {
                                         HttpServletRequest request) {
         return eventService.findPublicEvent(eventId, request.getRemoteAddr());
     }
+
+    @Override
+    public List<EventShortDto> getRecommendations(Long userId, Integer maxResult) {
+        return eventService.getRecommendations(userId, maxResult);
+    }
+
+    @Override
+    public void addLike(Long eventId, Long userId) {
+        eventService.addLike(eventId, userId);
+    }
 }

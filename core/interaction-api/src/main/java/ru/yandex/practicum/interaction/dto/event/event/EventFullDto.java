@@ -30,5 +30,5 @@ public class EventFullDto {
     private String createdOn;
 
     private Integer confirmedRequests;
-    private Long views;
+    private Double rating;
 }

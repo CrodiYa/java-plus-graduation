@@ -106,6 +106,28 @@ public interface EventService {
      */
     EventFullDto patchAdminEvent(Long eventId, EventDtoRequest request);
 
+    /**
+     * Retrieves personalized event recommendations for a specific user.
+     * Uses similarity calculations based on user actions to suggest relevant events.
+     *
+     * @param userId    id of the user requesting recommendations
+     * @param maxResult maximum number of recommendations to return
+     * @return list of recommended short event DTOs
+     * @throws NotFoundException if the user does not exist
+     */
+    List<EventShortDto> getRecommendations(Long userId, Integer maxResult);
+
+    /**
+     * Adds a like from a user to a specific event.
+     * Records the user's positive interaction with the event for similarity calculations.
+     *
+     * @param eventId id of the event to like
+     * @param userId  id of the user adding the like
+     * @throws NotFoundException   if the user or event does not exist
+     * @throws ConflictException   if the user has already liked the event
+     * @throws BadRequestException if the event is not published
+     */
+    void addLike(Long eventId, Long userId);
 
     /**
      * Checks if an event with the specified id exists.

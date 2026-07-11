@@ -3,7 +3,7 @@ package ru.yandex.practicum.comment.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.yandex.practicum.comment.model.Comment;
-import ru.yandex.practicum.dto.Formatter;
+import ru.yandex.practicum.interaction.common.Formatter;
 import ru.yandex.practicum.interaction.dto.comment.CommentDto;
 import ru.yandex.practicum.interaction.dto.comment.CommentShortDto;
 

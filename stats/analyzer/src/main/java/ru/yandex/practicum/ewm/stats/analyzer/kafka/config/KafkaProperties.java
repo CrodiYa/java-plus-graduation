@@ -1,11 +1,8 @@
-package ru.yandex.practicum.ewm.stats.analyzer.kafka;
+package ru.yandex.practicum.ewm.stats.analyzer.kafka.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Data
 @Component
@@ -15,15 +12,4 @@ public class KafkaProperties {
     private ConsumerConfig actionConsumer = new ConsumerConfig();
     private ConsumerConfig similarityConsumer = new ConsumerConfig();
     private Topic topic = new Topic();
-
-    @Data
-    public static class ConsumerConfig {
-        private Map<String, String> properties;
-    }
-
-    @Data
-    public static class Topic {
-        private String actions;
-        private String similarity;
-    }
 }

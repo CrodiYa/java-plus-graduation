@@ -14,6 +14,7 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.practicum.ewm.stats.avro.EventSimilarityAvro;
 import ru.practicum.ewm.stats.avro.UserActionAvro;
+import ru.yandex.practicum.ewn.stats.aggregator.kafka.config.KafkaProperties;
 
 import java.time.Duration;
 import java.util.*;

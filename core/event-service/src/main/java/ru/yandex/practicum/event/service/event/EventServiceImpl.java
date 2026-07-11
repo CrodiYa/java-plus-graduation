@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.client.CollectorClient;
 import ru.yandex.practicum.client.RecommendationClient;
 import ru.yandex.practicum.event.mapper.EventMapper;
@@ -253,6 +254,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public void addLike(Long eventId, Long userId) {
         Event event = findEntityById(eventId);
 

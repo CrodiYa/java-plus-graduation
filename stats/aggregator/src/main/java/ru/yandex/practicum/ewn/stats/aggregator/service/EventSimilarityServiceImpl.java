@@ -14,6 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class EventSimilarityServiceImpl implements EventSimilarityService {
 
+    private static final double DEFAULT_WEIGHT = 0.0;
+
     /**
      * Map storing maximum weights for each user per event.
      * Key: eventId, Value: Map of userId -> max weight
@@ -62,7 +64,7 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
                 .put(userId, newWeight);
 
         double difference = newWeight - oldWeight;
-        double newSum = eventWeightSums.getOrDefault(eventId, 0.0) + difference;
+        double newSum = eventWeightSums.getOrDefault(eventId, DEFAULT_WEIGHT) + difference;
         eventWeightSums.put(eventId, newSum);
     }
 
@@ -118,7 +120,7 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
         long second = Math.max(eventId1, eventId2);
 
         Map<Long, Double> pairSums = minWeightsSums.computeIfAbsent(first, k -> new HashMap<>());
-        double currentMin = pairSums.getOrDefault(second, 0.0);
+        double currentMin = pairSums.getOrDefault(second, DEFAULT_WEIGHT);
 
         double oldMin = Math.min(oldWeight, otherWeight);
         double newMin = Math.min(newWeight, otherWeight);
@@ -130,7 +132,7 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
         Double sum2 = eventWeightSums.get(second);
 
         if (sum1 == null || sum2 == null || sum1 <= 0 || sum2 <= 0) {
-            return 0.0;
+            return DEFAULT_WEIGHT;
         }
 
         double sMin = pairSums.get(second);
@@ -142,11 +144,11 @@ public class EventSimilarityServiceImpl implements EventSimilarityService {
      *
      * @param eventId the event id
      * @param userId  the user id
-     * @return the current weight, or 0.0 if not found
+     * @return the current weight, or DEFAULT_WEIGHT if not found
      */
     private double getCurrentWeight(long eventId, long userId) {
         Map<Long, Double> weights = eventUserMaxWeights.get(eventId);
-        return (weights != null) ? weights.getOrDefault(userId, 0.0) : 0.0;
+        return (weights != null) ? weights.getOrDefault(userId, DEFAULT_WEIGHT) : DEFAULT_WEIGHT;
     }
 
     /**

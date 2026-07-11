@@ -21,6 +21,8 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class RecommendationServiceImpl implements RecommendationService {
 
+    private static final double DEFAULT_WEIGHT = 0.0;
+
     private final EventSimilarityService eventSimilarityService;
     private final UserActionService userActionService;
 
@@ -99,7 +101,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     private RecommendedEventProto assembleRecommendedEvent(Long eventId, Double score) {
         return RecommendedEventProto.newBuilder()
                 .setEventId(eventId)
-                .setScore(score != null ? score : 0.0)
+                .setScore(score != null ? score : DEFAULT_WEIGHT)
                 .build();
     }
 

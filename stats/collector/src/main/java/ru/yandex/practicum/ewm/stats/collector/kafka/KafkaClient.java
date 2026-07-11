@@ -8,6 +8,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Component;
 import ru.practicum.ewm.stats.avro.UserActionAvro;
+import ru.yandex.practicum.ewm.stats.collector.kafka.config.KafkaProperties;
 
 import java.util.Map;
 import java.util.Properties;
